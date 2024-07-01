@@ -18,9 +18,17 @@ python run.py \
   --per_instance_cost_limit 2.00
 ```
 
+<details>
+<summary>Output</summary>
+
+```json
+--8<-- "docs/usage/cl_tutorial_cmd_1_output.log"
+```
+</details>
+
 Here,
 
-* `--model_name` sets the language model that is used by SWE-agent (with `gpt4` being the default). More information on the available models in our [FAQ](faq.md)
+* `--model_name` sets the language model that is used by SWE-agent (with `gpt4` being the default). More information on the available models in our [FAQ](usage_faq.md)
 * `--data_path` points to the source of the *problem statement* (for example, the GitHub issue that you want to solve). You can also point it to local files (see [below](#specifying-the-repository))
 * `--config_file` includes settings such as the prompts. Changing the config file is the easiest way to get started with modifying SWE-agent (more advanced options are discussed [here](../config/config.md)).
 * `--per_instance_cost_limit` limits the total inference cost to $2 (default is $3).
@@ -37,6 +45,11 @@ Here,
 
 
 ## Specifying the repository
+
+!!! note "Operating in batch mode: Running on SWE-bench and other benchmark sets"
+    If you want to run SWE-agent in batch mode on SWE-bench or another whole evaluation set, see
+    [benchmarking](benchmarking.md). This tutorial focuses on using SWE-agent on
+    individual issues.
 
 In the above example, the repository/codebase is inferred from the `--data_path`.
 This options is currently only available for GitHub issues.
@@ -80,7 +93,7 @@ SWE-agent will then start from this commit when trying to solve the problem.
 !!! warning "Uncommitted changes"
     When running with a local `--repo_path`, SWE-agent will use the last commit, i.e., all local, uncommitted changes will not be seen by SWE-agent.
 
-## Installing dependencies and setting up the environment
+## Installing dependencies and setting up the environment <a name="environment-setup"></a>
 
 Now let's move on to a slightly more complicated issue ([`swe-agent/test-repo #22`](https://github.com/SWE-agent/test-repo/issues/22)).
 
@@ -99,19 +112,67 @@ python run.py \
 
 This time, `pip install -e .` is called before SWE-agent gets to work, installing the package defined in the repository.
 
-Let's take a look at the config file
+Let's take a look at the `py310_default.yaml` config file
 
 ```yaml
-python: '3.10'
-install: 'pip install -e .'
+--8<-- "config/environment_setup/py310_default.yaml"
 ```
 
-Here, `install` is an arbitrary command that is run, while `python` will be the python version that is setup with conda.
+Here, `install` is an arbitrary command that is run, while `python` will be the required python version.
+The default install command will create an [editable install][] of the python package.
+We first try to use [`uv pip`][uv] (a much faster implementation of `pip` in [rust][]), but fall back to "normal" pip if it fails.
 
-The config file also provides two more top level directives:
+!!! tip "Editable installs"
+    Using [editable installs][editable install] is crucial for SWE-agent so that
+    changes to the package code take effect without having to reinstall the package.
 
-* `packages`: Path to a `requirements.txt` or to a `env.yml` as readable by conda
-* `pip_packages`: A list of python packages that are installed with `pip install PACKAGE`
+[editable install]: https://setuptools.pypa.io/en/latest/userguide/development_mode.html
+[uv]: https://pypi.org/project/uv/
+[rust]: https://www.rust-lang.org/
+
+The config file can have the following keys:
+
+* `python`: Python version (will be set up via conda)
+* `packages`: Either `requirements.txt`, `environment.yml` (finds the corresponding file and installs from there) or a whitespace separated list of conda packages
+* `pip_packages`: A list of additional python packages that are installed with `pip install PACKAGE`
+* `pre_install`: A list of custom commands
+* `install`: A custom command
+* `post_install`: A list of custom commands
+
+If you have very specific requirements, that can _not_ be installed via conda, you can [create a custom Docker image](../config/docker.md).
+
+## Speeding up SWE-agent <a name="speedup"></a>
+
+!!! tip "Speed up in v0.6"
+    SWE-agent v0.6 (June 4th, 2024) introduced major speedups. Please upgrade to the latest version.
+    To make use of [`uv pip`][uv], make sure that you have the latest `sweagent/swe-agent:latest` image.
+
+After the Docker container has been started, the target repository cloned/copied, and the dependencies installed,
+almost all of the remaining runtime can be attributed to waiting for your LM provider to answer your API calls.
+
+Therefore, speeding SWE-agent is mostly about speeding up the setup stages.
+We currently offer three ways to cache the setup stages:
+
+* By specifying `--container_name`, you run SWE-agent with a _persistent_ Docker container: Rather than being deleted
+  after every task, the Docker container will only be paused and can be resumed. Cloned repositories from previous
+  runs with the same container name, as well as any installed conda environments (versioned by the version of the package
+  you are installing) will be already available.
+* Alternatively, you can specify `--cache_task_images`. For every repository/base commit/environment setup, we
+  [commit][docker commit] the changes from the installation stage to the Docker image. The corresponding containers are temporary as usual.
+  Unlike the persistent containers, there will be a new image _for almost every base commit_ (that is, probably for every task
+  when evaluating on a benchmark), which makes this only relevant when running over the same tasks more than once
+  (for example when testing different agent configurations or LMs).
+* You can also [build your own Docker image](../config/docker.md) and ensure that all relevant conda environments and repositories
+  are available (check the logs from the previous runs to get the names for repositories and environments).
+
+!!! tip "Confused about the two options?"
+    Probably `--container_name my_container_name` will do what you want.
+
+!!! note "What's the difference between Docker images and containers?"
+    Docker containers are running instances of Docker images (that you can think of as snapshots of what
+    happens after you build the `Dockerfile`). [More information](https://stackoverflow.com/a/26960888/).
+
+[docker commit]: https://docs.docker.com/reference/cli/docker/container/commit/
 
 ## Taking actions
 

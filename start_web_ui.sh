@@ -4,9 +4,12 @@ set -euo pipefail
 
 this_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-function stop_react {
+function cleanup {
     echo "Stopping react server"
     npx --prefix "${this_dir}/sweagent/frontend" pm2 delete swe-agent
+    echo "Stopping Flask server"
+    kill "$flask_pid" 2>/dev/null
+    echo "Cleanup complete"
 }
 
 function print_log {
@@ -16,9 +19,13 @@ function print_log {
     echo "----------"
 }
 
+trap print_log ERR
+python sweagent/api/server.py > web_api.log 2>&1 &
+flask_pid=$!
+
 cd "${this_dir}/sweagent/frontend"
 npm install
-trap stop_react exit
+trap cleanup EXIT
 npx pm2 start --name swe-agent npm -- start
 
 echo "* If you are running on your own machine, then a browser window "
@@ -30,10 +37,9 @@ echo "  Missed it? Find more information at "
 echo "  https://princeton-nlp.github.io/SWE-agent/installation/codespaces#running-the-web-ui"
 echo "* Something went wrong? Please check "
 echo "  web_api.log for error messages!"
+echo "* See here for more information: https://princeton-nlp.github.io/SWE-agent/usage/web_ui/"
 
 cd ../../
-trap print_log ERR
-python sweagent/api/server.py > web_api.log 2>&1 &
 
-wait -n
+wait
 exit $?

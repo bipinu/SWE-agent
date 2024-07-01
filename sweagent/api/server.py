@@ -11,7 +11,6 @@ except ImportError as e:
 import atexit
 import copy
 import json
-import os
 import sys
 import tempfile
 import time
@@ -26,7 +25,6 @@ from flask import Flask, make_response, render_template, request, session
 from flask_cors import CORS
 from flask_socketio import SocketIO
 
-import sweagent.environment.utils as env_utils
 from sweagent import CONFIG_DIR, PACKAGE_DIR
 from sweagent.agent.agents import AgentArguments
 from sweagent.agent.models import ModelArguments
@@ -38,7 +36,7 @@ from sweagent.environment.swe_env import EnvironmentArguments
 sys.path.append(str(PACKAGE_DIR.parent))
 from run import ActionsArguments, Main, ScriptArguments
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder=Path(__file__).parent)
 CORS(app)
 socketio = SocketIO(app, cors_allowed_origins="*")
 # Setting these variables outside of `if __name__ == "__main__"` because when run Flask server with
@@ -48,9 +46,6 @@ app.secret_key = "super secret key"
 app.config["SESSION_TYPE"] = "memcache"
 
 THREADS: dict[str, MainThread] = {}
-
-os.environ["SWE_AGENT_EXPERIMENTAL_COMMUNICATE"] = "1"
-env_utils.START_UP_DELAY = 1
 
 
 def ensure_session_id_set():

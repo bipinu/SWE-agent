@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-import logging
 import os
 import platform
 import re
@@ -15,21 +14,22 @@ import traceback
 from io import BytesIO
 from pathlib import Path
 from subprocess import PIPE, STDOUT
-from typing import Any
+from typing import Any, Callable
 
 from datasets import load_dataset, load_from_disk
 from ghapi.all import GhApi
 from git import InvalidGitRepositoryError, Repo
 
 import docker
+from docker.models.containers import Container
+from sweagent.utils.config import keys_config
+from sweagent.utils.log import get_logger
 
-LOGGER_NAME = "intercode"
-START_UP_DELAY = 5
-TIMEOUT_DURATION = 25
+DOCKER_START_UP_DELAY = float(keys_config.get("SWE_AGENT_DOCKER_START_UP_DELAY", 1))
 GITHUB_ISSUE_URL_PATTERN = re.compile(r"github\.com\/(.*?)\/(.*?)\/issues\/(\d+)")
 GITHUB_REPO_URL_PATTERN = re.compile(r".*[/@]?github\.com\/([^/]+)\/([^/]+)")
 
-logger = logging.getLogger(LOGGER_NAME)
+logger = get_logger("env_utils")
 
 
 def get_data_path_name(data_path: str) -> str:
@@ -58,17 +58,17 @@ def is_github_repo_url(data_path: str) -> bool:
 
 
 # TODO: Why not just use copy_anything_to_container?
-def copy_file_to_container(container, contents, container_path):
+def copy_file_to_container(container: Container, contents: str, container_path: str) -> None:
     """
     Copies a given string into a Docker container at a specified path.
 
     Args:
-    - container: Docker SDK container object.
-    - contents: The string to copy into the container.
-    - container_path: The path inside the container where the string should be copied to.
+        container: Docker SDK container object.
+        contents: The string to copy into the container.
+        container_path: The path inside the container where the string should be copied to.
 
     Returns:
-    - None
+        None
     """
     temp_file_name = None
 
@@ -103,7 +103,7 @@ def copy_file_to_container(container, contents, container_path):
             os.remove(temp_file_name)
 
 
-def copy_anything_to_container(container, host_path: str, container_path: str) -> None:
+def copy_anything_to_container(container: Container, host_path: str, container_path: str) -> None:
     """Copy files or directories from host to container
 
     Note: Will need to set ownership on the copied files in the container.
@@ -120,18 +120,18 @@ def copy_anything_to_container(container, host_path: str, container_path: str) -
         raise RuntimeError(msg) from e
 
 
-def read_with_timeout(container, pid_func, timeout_duration):
+def read_with_timeout(container: subprocess.Popen, pid_func: Callable, timeout_duration: int) -> str:
     """
     Read data from a subprocess with a timeout.
     This function uses a file descriptor to read data from the subprocess in a non-blocking way.
 
     Args:
-        container (subprocess.Popen): The subprocess container.
-        pid_func (function): A function that returns a list of process IDs (except the PID of the main process).
-        timeout_duration (int): The timeout duration in seconds.
+        container: The subprocess container.
+        pid_func: A function that returns a list of process IDs (except the PID of the main process).
+        timeout_duration: The timeout duration in seconds.
 
     Returns:
-        str: The data read from the subprocess, stripped of trailing newline characters.
+        output: The data read from the subprocess, stripped of trailing newline characters.
 
     Raises:
         TimeoutError: If the timeout duration is reached while reading from the subprocess.
@@ -182,7 +182,7 @@ PROCESS_DONE_MARKER_END = ":PROCESS-DONE///"
 PROCESS_DONE_REGEX = re.compile(rf"{PROCESS_DONE_MARKER_START}(.+?){PROCESS_DONE_MARKER_END}")
 
 
-def read_with_timeout_experimental(container, timeout_duration):
+def read_with_timeout_experimental(container: subprocess.Popen, timeout_duration: int) -> tuple[str, str]:
     """
     Read data from a subprocess with a timeout.
     This function uses a file descriptor to read data from the subprocess in a non-blocking way.
@@ -191,11 +191,11 @@ def read_with_timeout_experimental(container, timeout_duration):
     has not been thoroughly tested.
 
     Args:
-        container (subprocess.Popen): The subprocess container.
-        timeout_duration (int): The timeout duration in seconds.
+        container: The subprocess container.
+        timeout_duration: The timeout duration in seconds.
 
     Returns:
-        str: The data read from the subprocess, stripped of trailing newline characters.
+        Output and exit code, both as strings (!)
 
     Raises:
         TimeoutError: If the timeout duration is reached while reading from the subprocess.
@@ -222,11 +222,12 @@ def read_with_timeout_experimental(container, timeout_duration):
             try:
                 data = os.read(fd, 4096)
             except BlockingIOError:
+                logger.error("BlockingIOError while reading from subprocess.", exc_info=True)
                 break
             if data:
                 buffer += data
-        if PROCESS_DONE_MARKER_START in buffer.decode():
-            break
+                if PROCESS_DONE_MARKER_START in buffer.decode():
+                    break
         time.sleep(0.01)  # Prevents CPU hogging
 
     if container.poll() is not None:
@@ -237,16 +238,15 @@ def read_with_timeout_experimental(container, timeout_duration):
         raise TimeoutError(msg)
     decoded = buffer.decode()
     body = "\n".join(line for line in decoded.splitlines() if not line.startswith(PROCESS_DONE_MARKER_START))
-    last_line = decoded.splitlines()[-1]
-    _results = PROCESS_DONE_REGEX.search(last_line)
+    _results = PROCESS_DONE_REGEX.search(decoded)
     if _results is None:
-        msg = f"Could not find process done marker in last line: {last_line=}, {body=}"
+        msg = f"Could not find process done marker in last line: {decoded=}, {body=}"
         raise ValueError(msg)
     exit_code = _results.group(1)
     return body, exit_code
 
 
-def get_background_pids(container_obj):
+def get_background_pids(container_obj: Container):
     pids = container_obj.exec_run("ps -eo pid,comm --no-headers").output.decode().split("\n")
     pids = [x.split() for x in pids if x]
     pids = [x for x in pids if x[1] not in {"ps"} and x[0] != "1"]
@@ -255,7 +255,7 @@ def get_background_pids(container_obj):
     return bash_pids, other_pids
 
 
-def _get_non_persistent_container(ctr_name: str, image_name: str) -> tuple[subprocess.Popen, set]:
+def _get_non_persistent_container(ctr_name: str, image_name: str) -> tuple[subprocess.Popen, set[str]]:
     startup_cmd = [
         "docker",
         "run",
@@ -276,17 +276,20 @@ def _get_non_persistent_container(ctr_name: str, image_name: str) -> tuple[subpr
         text=True,
         bufsize=1,  # line buffered
     )
-    time.sleep(START_UP_DELAY)
+    time.sleep(DOCKER_START_UP_DELAY)
     # try to read output from container setup (usually an error), timeout if no output
     output = read_with_timeout(container, lambda: list(), timeout_duration=2)
     if output:
         logger.error(f"Unexpected container setup output: {output}")
+    # bash PID is always 1 for non-persistent containers
     return container, {
         "1",
-    }  # bash PID is always 1 for non-persistent containers
+    }
 
 
-def _get_persistent_container(ctr_name: str, image_name: str, persistent: bool = False) -> tuple[subprocess.Popen, set]:
+def _get_persistent_container(
+    ctr_name: str, image_name: str, persistent: bool = False
+) -> tuple[subprocess.Popen, set[str]]:
     client = docker.from_env()
     containers = client.containers.list(all=True, filters={"name": ctr_name})
     if ctr_name in [c.name for c in containers]:
@@ -330,7 +333,7 @@ def _get_persistent_container(ctr_name: str, image_name: str, persistent: bool =
         text=True,
         bufsize=1,  # line buffered
     )
-    time.sleep(START_UP_DELAY)
+    time.sleep(DOCKER_START_UP_DELAY)
     # try to read output from container setup (usually an error), timeout if no output
     output = read_with_timeout(container, lambda: list(), timeout_duration=2)
     if output:
@@ -338,28 +341,25 @@ def _get_persistent_container(ctr_name: str, image_name: str, persistent: bool =
     # Get the process IDs of the container
     # There should be at least a head process and possibly one child bash process
     bash_pids, other_pids = get_background_pids(container_obj)
-    total_time_slept = START_UP_DELAY
+    total_time_slept = DOCKER_START_UP_DELAY
+    # Let's wait for a maximum of 5 x DOCKER_START_UP_DELAY seconds
+    # and then check again.
     while len(bash_pids) > 1 or len(other_pids) > 0:
         time.sleep(1)
         total_time_slept += 1
         bash_pids, other_pids = get_background_pids(container_obj)
-        if total_time_slept > 5 * START_UP_DELAY:
+        if total_time_slept > 5 * DOCKER_START_UP_DELAY:
             break
     bash_pid = 1
     if len(bash_pids) == 1:
         bash_pid = bash_pids[0][0]
     elif len(bash_pids) > 1 or len(other_pids) > 0:
-        msg = f"Detected alien processes attached or running. Please ensure that no other agents are running on this container. PIDs: {bash_pids}, {other_pids}"
+        msg = (
+            "Detected alien processes attached or running. Please ensure that no other agents "
+            f"are running on this container. PIDs: {bash_pids}, {other_pids}"
+        )
         raise RuntimeError(msg)
-    return container, set(
-        map(
-            str,
-            [
-                bash_pid,
-                1,
-            ],
-        ),
-    )
+    return container, {str(bash_pid), "1"}
 
 
 def get_container(ctr_name: str, image_name: str, persistent: bool = False) -> tuple[subprocess.Popen, set]:
@@ -387,12 +387,12 @@ def get_container(ctr_name: str, image_name: str, persistent: bool = False) -> t
         return _get_non_persistent_container(ctr_name, image_name)
 
 
-def image_exists(image_name):
+def image_exists(image_name: str) -> bool:
     """
     Check that the image exists and give some better error messages.
 
     Arguments:
-        image_name (str): Name of image
+        image_name: Name of image
     Returns:
         bool: True if image exists
     """
@@ -451,7 +451,15 @@ class InvalidGithubURL(ValueError): ...
 
 
 def parse_gh_issue_url(issue_url: str) -> tuple[str, str, str]:
-    """Return owner, repo, issue number from issue url"""
+    """
+    Returns:
+        owner: Repo owner
+        repo: Repo name
+        issue number: Issue number as str
+
+    Raises:
+        InvalidGithubURL: If the URL is not a valid github issue URL
+    """
     match = GITHUB_ISSUE_URL_PATTERN.search(issue_url)
     if not match:
         msg = f"Invalid GitHub issue URL: {issue_url}"
@@ -462,7 +470,14 @@ def parse_gh_issue_url(issue_url: str) -> tuple[str, str, str]:
 
 
 def parse_gh_repo_url(repo_url: str) -> tuple[str, str]:
-    """Return owner, repo from repo url"""
+    """
+    Returns:
+        owner: Repo owner/org
+        repo: Repo name
+
+    Raises:
+        InvalidGithubURL: If the URL is not a valid github repo URL
+    """
     match = GITHUB_REPO_URL_PATTERN.search(repo_url)
     if not match:
         msg = f"Invalid GitHub issue URL: {repo_url}"
@@ -701,19 +716,20 @@ def get_instances(
 
     # If file_path is a file, load the file
     if file_path.endswith(".json"):
-        return postproc_instance_list(json.load(open(file_path)))
+        with open(file_path) as file:
+            return postproc_instance_list(json.load(file))
     if file_path.endswith(".jsonl"):
-        return postproc_instance_list([json.loads(x) for x in open(file_path).readlines()])
+        return postproc_instance_list([json.loads(x) for x in Path(file_path).read_text().splitlines(keepends=True)])
 
     # Attempt load from HF datasets as a last resort
     try:
         return postproc_instance_list(load_dataset(file_path, split=split))
-    except:
+    except Exception as e:
         msg = (
             f"Could not load instances from {file_path}. "
             "Please ensure --data_path is a GitHub URL, a SWE-bench HuggingFace dataset, or a JSON/JSONL file."
         )
-        raise ValueError(msg)
+        raise ValueError(msg) from e
 
 
 def get_associated_commit_urls(org: str, repo: str, issue_number: str, *, token: str = "") -> list[str]:

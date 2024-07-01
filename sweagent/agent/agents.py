@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import logging
 import re
 from dataclasses import dataclass
 from pathlib import Path
@@ -23,10 +22,8 @@ from sweagent.agent.models import (
 )
 from sweagent.agent.parsing import FormatError, ParseFunction
 from sweagent.environment.swe_env import SWEEnv
-from sweagent.environment.utils import LOGGER_NAME
 from sweagent.utils.config import convert_paths_to_abspath
-
-logger = logging.getLogger(LOGGER_NAME)
+from sweagent.utils.log import get_logger
 
 
 @dataclass(frozen=True)
@@ -256,8 +253,10 @@ class Agent:
         self.history = []
         self.last_container_id = None
         self.hooks = []
+        self.logger = get_logger("agent")
 
     def add_hook(self, hook: AgentHook):
+        """Add hook to agent"""
         hook.on_init()
         self.hooks.append(hook)
 
@@ -267,13 +266,18 @@ class Agent:
         self.history.append(item)
 
     def setup(self, instance_args, init_model_stats=None) -> None:
-        """Setup the agent for a new instance."""
+        """Setup the agent for a new instance. This includes
+        formatting the system message and adding demonstrations to the history.
+
+        Args:
+            instance_args: Arguments for the instance
+        """
         assert self.config is not None  # mypy
         self.model.reset_stats(init_model_stats)
         self.instance_args = instance_args
 
         system_msg = self.config.system_template.format(**self.system_args)
-        logger.info(f"SYSTEM ({self.name})\n{system_msg}")
+        self.logger.info(f"SYSTEM ({self.name})\n{system_msg}")
 
         self.history: list[dict[str, Any]] = []
         self._append_history({"role": "system", "content": system_msg, "agent": self.name})
@@ -285,7 +289,7 @@ class Agent:
                     raise ValueError(msg)
 
                 # Load history
-                logger.info(f"DEMONSTRATION: {demonstration_path}")
+                self.logger.info(f"DEMONSTRATION: {demonstration_path}")
                 demo_history = json.loads(Path(demonstration_path).read_text())["history"]
                 demo_history = [
                     entry
@@ -295,7 +299,7 @@ class Agent:
 
                 if self.config.put_demos_in_history:
                     if self.config.demonstration_template is not None:
-                        logger.warning("Demonstration template is ignored for put_demos_in_history=True")
+                        self.logger.warning("Demonstration template is ignored for put_demos_in_history=True")
                     # Add demonstration to history directly as separate messages
                     for entry in demo_history:
                         if entry["role"] != "system":
@@ -327,7 +331,10 @@ class Agent:
         """Return the history of the agent since the last reset."""
         return self.config.history_processor([entry for entry in self.history if entry["agent"] == self.name])
 
-    def save_trajectory(self, trajectory, log_path: Path, env_name: str, info: dict[str, Any]):
+    def save_trajectory(
+        self, trajectory: list[dict[str, Any]], log_path: Path, env_name: str, info: dict[str, Any]
+    ) -> None:
+        """Save the trajectory"""
         log_dict = {
             "environment": env_name,
             "trajectory": trajectory,
@@ -335,7 +342,6 @@ class Agent:
             "info": info,
         }
         log_path.write_text(json.dumps(log_dict, indent=2))
-        logger.info(f"Saved trajectory to {log_path}")
 
     def _get_first_match(self, action: str, pattern_type: str) -> re.Match | None:
         """Return the first match of a command pattern in the action string."""
@@ -431,7 +437,7 @@ class Agent:
                 rem_action = ""
         return parsed_action
 
-    def _parse_command_patterns(self):
+    def _parse_command_patterns(self) -> None:
         assert self.config is not None  # mypy
         self.command_patterns = dict()
         for command in self.config._commands:
@@ -466,6 +472,18 @@ class Agent:
         self.command_patterns[self.config.submit_command] = submit_pat
 
     def forward(self, observation: str, available_actions: list[str], state: str) -> tuple[str, str, str]:
+        """Forwards the model
+
+        Args:
+            observation: Observation
+            available_actions: Currently not used
+            state:
+
+        Returns:
+            thought: model reasoning
+            action: action that the model proposes
+            output: raw model output
+        """
         thought, action, output = self.forward_with_error_check(observation, state)
 
         self._append_history(
@@ -478,15 +496,17 @@ class Agent:
             },
         )
 
-        logger.info(f"💭 THOUGHT ({self.name})\n{thought}")
-        logger.info(f"🎬 ACTION ({self.name})\n{action}")
+        self.logger.info(f"💭 THOUGHT ({self.name})\n{thought}")
+        self.logger.info(f"🎬 ACTION ({self.name})\n{action}")
 
         return thought, action, output
 
     def forward_model(self, observation: str, state: str) -> str:
         """Query the model with the current state and observation with the appropriate template.
 
-        Returns the model output."""
+        Returns:
+            output: raw model output
+        """
         assert self.config is not None  # mypy
 
         state_vars = json.loads(state)
@@ -519,19 +539,19 @@ class Agent:
 
         message = "\n".join(messages)
 
-        logger.info(f"🤖 MODEL INPUT\n{message}")
+        self.logger.info(f"🤖 MODEL INPUT\n{message}")
         self._append_history({"role": "user", "content": message, "agent": self.name})
 
         for hook in self.hooks:
             hook.on_model_query(query=self.local_history, agent=self.name)
         return self.model.query(self.local_history)
 
-    def retry_after_format_fail(self, output):
+    def retry_after_format_fail(self, output: str) -> str:
         """Ask the model to correct (without committing to persistent history) after a malformatted model output"""
         format_error_template = self.config.format_error_template
 
-        logger.warning(f"MALFORMED OUTPUT\n{output}")
-        logger.warning(f"FORMAT ERROR\n{format_error_template}")
+        self.logger.warning(f"MALFORMED OUTPUT\n{output}")
+        self.logger.warning(f"FORMAT ERROR\n{format_error_template}")
 
         temp_history = self.local_history + [
             {"role": "assistant", "content": output, "agent": self.name},
@@ -539,13 +559,13 @@ class Agent:
         ]
         return self.model.query(temp_history)
 
-    def retry_after_blocklist_fail(self, output, action):
+    def retry_after_blocklist_fail(self, output: str, action: str) -> str:
         """Ask the model to correct (without committing to persistent history) after a disallowed command"""
         name = action.strip().split()[0]
         blocklist_error_message = self.config.blocklist_error_template.format(name=name)
 
-        logger.warning(f"BLOCKLISTED OUTPUT\n{output}")
-        logger.warning(f"BLOCKLIST ERROR\n{blocklist_error_message}")
+        self.logger.warning(f"BLOCKLISTED OUTPUT\n{output}")
+        self.logger.warning(f"BLOCKLIST ERROR\n{blocklist_error_message}")
 
         temp_history = self.local_history + [
             {"role": "assistant", "content": output, "agent": self.name},
@@ -553,7 +573,7 @@ class Agent:
         ]
         return self.model.query(temp_history)
 
-    def should_block_action(self, action):
+    def should_block_action(self, action: str) -> bool:
         """Check if the command should be blocked."""
         names = action.strip().split()
         if len(names) == 0:
@@ -573,7 +593,10 @@ class Agent:
 
         Try to parse the output into a thought and action. Retry if the output is malformatted or the action is blocked.
 
-        Returns the thought, action, and raw model output.
+        Returns:
+            thought: model reasoning
+            action: action that the model proposes
+            output: raw model output
         """
         # Condition for handling outputs with no thought (just action)
         if self.model.args.model_name == "human":
@@ -606,32 +629,37 @@ class Agent:
                 output = self.retry_after_blocklist_fail(output, action)
             else:
                 return thought, action, output
-        logger.warning(f"Malformat limit reached: \n{output}")
+        self.logger.warning(f"Malformat limit reached: \n{output}")
         return "Exit due to format error", "exit_format", output
 
     def forward_with_error_check(self, observation: str, state: str) -> tuple[str, str, str]:
         """Wrapper around `self.forward_model` that handles errors and retries
         due to format errors or blocked actions.
+
+        Returns:
+            thought: model reasoning
+            action: action that the model proposes
+            output: raw model output
         """
         try:
             output = self.forward_model(observation, state)
         except KeyboardInterrupt:
             raise
         except RuntimeError as e:
-            logger.warning(f"Runtime error: {e}")
+            self.logger.warning(f"Runtime error: {e}")
             return (
                 f"Exit due to runtime error: {e}",
                 "exit_error",
                 f"exit due to runtime error: {e}",
             )
         except ContextWindowExceededError:
-            logger.warning("Context window exceeded")
+            self.logger.warning("Context window exceeded")
             return "Exit due to context window", "exit_context", "Exit due to context window"
         except CostLimitExceededError:
-            logger.warning("Cost limit exceeded")
+            self.logger.warning("Cost limit exceeded")
             return "Exit due to cost limit", "exit_cost", "Exit due to cost limit"
         except RetryError as e:
-            logger.warning(f"Retry error: {e}")
+            self.logger.warning(f"Retry error: {e}")
             return (
                 f"Exit due to retry error: {e}",
                 "exit_api",
@@ -639,10 +667,10 @@ class Agent:
             )
         return self.check_format_and_requery(output)
 
-    def init_environment_vars(self, env):
+    def init_environment_vars(self, env: SWEEnv):
         self.set_environment_vars(env, self.config.env_variables)
 
-    def set_environment_vars(self, env, env_variables):
+    def set_environment_vars(self, env: SWEEnv, env_variables: dict[str, Any]) -> None:
         assert self.config is not None  # mypy
         commands_to_execute = (
             [self.config.state_command.code]
@@ -660,12 +688,13 @@ class Agent:
         except KeyboardInterrupt:
             raise
         except Exception as e:
-            logger.warning("Failed to set environment variables")
+            self.logger.warning("Failed to set environment variables")
             raise e
         command_files = list()
         for file in self.config.command_files:
             datum = dict()
-            contents = open(file).read()
+            with open(file) as f:
+                contents = f.read()
             datum["contents"] = contents
             filename = Path(file).name
             if not contents.strip().startswith("#!"):
@@ -691,14 +720,16 @@ class Agent:
             command_files.append(datum)
         env.add_commands(command_files)
 
-    def get_environment_vars(self, env):
+    def get_environment_vars(self, env: SWEEnv) -> dict[str, Any]:
+        """Get environment variables"""
         assert self.config is not None  # mypy
         env_vars = dict()
         for var in self.config.env_variables:
             env_vars[var] = env.communicate(f"echo ${var}").strip()
         return env_vars
 
-    def call_subroutine(self, agent_name, sub_action, env):
+    def call_subroutine(self, agent_name: str, sub_action, env: SWEEnv):
+        """Call subroutine"""
         assert self.config is not None  # mypy
         env_vars = self.get_environment_vars(env)
         cwd = env.communicate("pwd -P").strip()
@@ -732,12 +763,26 @@ class Agent:
         env: SWEEnv,
         observation: str | None = None,
         traj_dir: Path | None = None,
-        return_type: str | None = "info",
+        return_type: str | None = "info_trajectory",
         init_model_stats: APIStats | None = None,
     ):
         """
         Run the agent on an environment.
         Return the final value of the specified return type.
+
+        Args:
+            setup_args: Arguments to pass to the agent's setup method.
+            env: The environment to run the agent on.
+            observation: Output from environment setup
+            traj_dir: Directory to save the trajectory to
+            return_type: Controls what to return.
+                This should be left at `info_trajectory`, the
+                other values are for internal usage with subroutines.
+            init_model_stats: Initial model stats to use for the run.
+
+        Returns:
+            If return_type is "info_trajectory", returns a tuple of
+            the info dictionary and the trajectory (list of dictionaries).
         """
         done = False
         # mypy checks
@@ -746,7 +791,7 @@ class Agent:
         assert self.config is not None
 
         if env.container_obj.id != self.last_container_id:
-            logger.info(f"Initializing agent settings for container {env.container_obj.id}")
+            self.logger.info(f"Initializing agent settings for container {env.container_obj.id}")
             self.init_environment_vars(env)
             self.last_container_id = env.container_obj.id
         # Re-initialize primary
@@ -759,7 +804,7 @@ class Agent:
         trajectory = []
         info = {}
         traj_log_path = traj_dir / (env.record["instance_id"] + ".traj")
-        logger.info("Trajectory will be saved to %s", traj_log_path)
+        self.logger.info("Trajectory will be saved to %s", traj_log_path)
         while not done:
             for hook in self.hooks:
                 hook.on_step_start()
@@ -808,7 +853,7 @@ class Agent:
         for hook in self.hooks:
             hook.on_run_done()
 
-        logger.info("Trajectory saved to %s", traj_log_path)
+        self.logger.info("Trajectory saved to %s", traj_log_path)
 
         if return_type == "info":
             return info

@@ -5,11 +5,11 @@ import logging
 import os
 from collections import defaultdict
 from dataclasses import dataclass, fields
+from pathlib import Path
 
 import together
 from anthropic import AI_PROMPT, HUMAN_PROMPT, Anthropic, AnthropicBedrock
 from openai import AzureOpenAI, BadRequestError, OpenAI
-from rich.logging import RichHandler
 from simple_parsing.helpers.serialization.serializable import FrozenSerializable, Serializable
 from tenacity import (
     retry,
@@ -20,12 +20,9 @@ from tenacity import (
 
 from sweagent.agent.commands import Command
 from sweagent.utils.config import keys_config
+from sweagent.utils.log import get_logger
 
-logger = logging.getLogger("api_models")
-handler = RichHandler(show_time=False, show_path=False)
-handler.setLevel(logging.DEBUG)
-logger.addHandler(handler)
-logger.propagate = False
+logger = get_logger("api_models")
 
 
 @dataclass(frozen=True)
@@ -43,7 +40,7 @@ class ModelArguments(FrozenSerializable):
     # Sampling top-p
     top_p: float = 1.0
     # Path to replay file when using the replay model
-    replay_path: str = None
+    replay_path: str | None = None
     # Host URL when using Ollama model
     host_url: str = "localhost:11434"
 
@@ -247,6 +244,11 @@ class OpenAIModel(BaseModel):
 
         # Set OpenAI key
         if self.args.model_name.startswith("azure"):
+            logger.warning(
+                "The --model CLI argument is ignored when using the Azure GPT endpoint. "
+                "The model is determined by the AZURE_OPENAI_DEPLOYMENT key/"
+                "environment variable (this might change in the future).",
+            )
             self.api_model = keys_config["AZURE_OPENAI_DEPLOYMENT"]
             self.client = AzureOpenAI(
                 api_key=keys_config["AZURE_OPENAI_API_KEY"],
@@ -329,6 +331,12 @@ class AnthropicModel(BaseModel):
             "cost_per_input_token": 3e-06,
             "cost_per_output_token": 1.5e-05,
         },
+        "claude-3-5-sonnet-20240620": {
+            "max_context": 200_000,
+            "max_tokens": 4096,
+            "cost_per_input_token": 3e-06,
+            "cost_per_output_token": 1.5e-05,
+        },
         "claude-3-haiku-20240307": {
             "max_context": 200_000,
             "max_tokens": 4096,
@@ -342,6 +350,7 @@ class AnthropicModel(BaseModel):
         "claude-opus": "claude-3-opus-20240229",
         "claude-sonnet": "claude-3-sonnet-20240229",
         "claude-haiku": "claude-3-haiku-20240307",
+        "claude-sonnet-3.5": "claude-3-5-sonnet-20240620",
     }
 
     def __init__(self, args: ModelArguments, commands: list[Command]):
@@ -807,7 +816,9 @@ class ReplayModel(BaseModel):
             msg = "--replay_path must point to a file that exists to run a replay policy"
             raise ValueError(msg)
 
-        self.replays = [list(json.loads(x).values())[0] for x in open(self.args.replay_path).readlines()]
+        self.replays = [
+            list(json.loads(x).values())[0] for x in Path(self.args.replay_path).read_text().splitlines(keepends=True)
+        ]
         self.replay_idx = 0
         self.action_idx = 0
 

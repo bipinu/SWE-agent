@@ -40,17 +40,23 @@ markdown_extensions:
   - footnotes
   - attr_list
   - md_in_html
+  - pymdownx.snippets:
+      check_paths: true
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
 nav:
   - Home: index.md
+  - Background:
+    - "background/index.md"
+    - "Overview": "background/overview.md"
+    - "ACI": "background/aci.md"
   - Installation:
     - "installation/index.md"
     - "Use in-browser": "installation/codespaces.md"
     - "Install from source": "installation/source.md"
     - "Docker": "installation/docker.md"
-    - "Adding your keys": "installation/keys.md"
+    - "API keys": "installation/keys.md"
     - "Installation tips": "installation/tips.md"
     - "Changelog": "installation/changelog.md"
   - Usage:
@@ -59,21 +65,33 @@ nav:
     - "Using the web UI": "usage/web_ui.md"
     - "Trajectories": "usage/trajectories.md"
     - "Trajectory inspector": "usage/inspector.md"
-    - "FAQ": "usage/faq.md"
+    - "FAQ": "usage/usage_faq.md"
     - "Benchmarking": "usage/benchmarking.md"
   - Configuration:
     - "Config files": "config/config.md"
     - "Command definitions": "config/commands.md"
     - "Demonstrations": "config/demonstrations.md"
     - "Environment variables": "config/env.md"
+    - "Docker images": "config/docker.md"
   - Development:
     - "Contribution guide": "dev/contribute.md"
     - "Formatting conflicts": "dev/formatting_conflicts.md"
-    - "Code structure": "dev/code_structure.md"
+  - Reference:
+    - "reference/index.md"
+    - "Agent": "reference/agent.md"
+    - "Models": "reference/models.md"
+    - "Environment": "reference/env.md"
+    - "Environment utils": "reference/env_utils.md"
+  - "FAQ": "faq.md"
 plugins:
    - glightbox
    - search
    - include-markdown
+   - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          paths: [sweagent]
 repo_url: https://github.com/princeton-nlp/SWE-agent
 repo_name: princeton-nlp/SWE-agent
 edit_uri: edit/main/docs/
