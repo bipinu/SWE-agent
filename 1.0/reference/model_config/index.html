@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.3">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.4">
     
     
       
@@ -26,7 +26,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.d7758b05.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.8608ea7d.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
@@ -658,8 +658,6 @@ This is the pre-release of SWE-agent 1.0. <a href="https://swe-agent.com/latest/
       
         
       
-        
-      
     
     
       
@@ -792,28 +790,6 @@ This is the pre-release of SWE-agent 1.0. <a href="https://swe-agent.com/latest/
   
   <span class="md-ellipsis">
     Batch mode
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../usage/benchmarking/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Benchmarking
     
   </span>
   
@@ -1076,6 +1052,12 @@ This is the pre-release of SWE-agent 1.0. <a href="https://swe-agent.com/latest/
       
         
       
+        
+      
+        
+      
+        
+      
     
     
       
@@ -1169,11 +1151,77 @@ This is the pre-release of SWE-agent 1.0. <a href="https://swe-agent.com/latest/
   
   
     <li class="md-nav__item">
+      <a href="../../config/models/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Models
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../config/demonstrations/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
     Demonstrations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../config/tools/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tools
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../config/environments/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Environments
     
   </span>
   
@@ -1596,6 +1644,8 @@ This is the pre-release of SWE-agent 1.0. <a href="https://swe-agent.com/latest/
   
     
     
+      
+        
       
         
       
@@ -2137,6 +2187,28 @@ This is the pre-release of SWE-agent 1.0. <a href="https://swe-agent.com/latest/
   
   <span class="md-ellipsis">
     History processors
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../parsers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Action parsers
     
   </span>
   
@@ -3239,7 +3311,7 @@ This can also be very useful to create your first <a href="../../config/demonstr
 
 
 </h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">HumanModel</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n"><span title="sweagent.agent.models.HumanModelConfig">HumanModelConfig</span></span><span class="p">,</span> <span class="n">tools</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-internal" title="sweagent.tools.tools.ToolConfig" href="../tools_config/#sweagent.tools.tools.ToolConfig">ToolConfig</a></span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">HumanModel</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n"><span title="sweagent.agent.models.HumanModelConfig">HumanModelConfig</span></span><span class="p">,</span> <span class="n">tools</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-internal" title="sweagent.tools.tools.ToolConfig" href="../bundle_config/#sweagent.tools.tools.ToolConfig">ToolConfig</a></span><span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
@@ -3347,7 +3419,7 @@ This can also be very useful to create your first <a href="../../config/demonstr
   </span>
 
 </h4>
-<div class="doc-signature highlight"><pre><span></span><code><span class="n">multi_line_command_endings</span> <span class="o">=</span> <span class="p">{</span><span class="n"><span title="command.name">name</span></span><span class="p">:</span> <span class="n">_zRsK2o9for</span> <span class="n">command</span> <span class="ow">in</span> <span class="n"><span title="sweagent.agent.models.HumanModel(tools).commands">commands</span></span> <span class="k">if</span> <span class="n"><span title="command.end_name">end_name</span></span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">multi_line_command_endings</span> <span class="o">=</span> <span class="p">{</span><span class="n"><span title="command.name">name</span></span><span class="p">:</span> <span class="n">_s8PiAn5for</span> <span class="n">command</span> <span class="ow">in</span> <span class="n"><span title="sweagent.agent.models.HumanModel(tools).commands">commands</span></span> <span class="k">if</span> <span class="n"><span title="command.end_name">end_name</span></span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -3437,7 +3509,7 @@ This can also be very useful to create your first <a href="../../config/demonstr
 
 
 </h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">HumanThoughtModel</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n"><span title="sweagent.agent.models.HumanModelConfig">HumanModelConfig</span></span><span class="p">,</span> <span class="n">tools</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-internal" title="sweagent.tools.tools.ToolConfig" href="../tools_config/#sweagent.tools.tools.ToolConfig">ToolConfig</a></span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">HumanThoughtModel</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n"><span title="sweagent.agent.models.HumanModelConfig">HumanModelConfig</span></span><span class="p">,</span> <span class="n">tools</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-internal" title="sweagent.tools.tools.ToolConfig" href="../bundle_config/#sweagent.tools.tools.ToolConfig">ToolConfig</a></span><span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
@@ -3560,7 +3632,7 @@ This can also be very useful to create your first <a href="../../config/demonstr
 
 
 </h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">ReplayModel</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n"><span title="sweagent.agent.models.ReplayModelConfig">ReplayModelConfig</span></span><span class="p">,</span> <span class="n">tools</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-internal" title="sweagent.tools.tools.ToolConfig" href="../tools_config/#sweagent.tools.tools.ToolConfig">ToolConfig</a></span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">ReplayModel</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n"><span title="sweagent.agent.models.ReplayModelConfig">ReplayModelConfig</span></span><span class="p">,</span> <span class="n">tools</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-internal" title="sweagent.tools.tools.ToolConfig" href="../bundle_config/#sweagent.tools.tools.ToolConfig">ToolConfig</a></span><span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">

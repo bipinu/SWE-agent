@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.3">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.4">
     
     
       
@@ -26,7 +26,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.d7758b05.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.8608ea7d.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
@@ -665,8 +665,6 @@ This is the pre-release of SWE-agent 1.0. <a href="https://swe-agent.com/latest/
       
         
       
-        
-      
     
     
       
@@ -820,6 +818,24 @@ This is the pre-release of SWE-agent 1.0. <a href="https://swe-agent.com/latest/
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#command-line-inspector" class="md-nav__link">
+    <span class="md-ellipsis">
+      Command line inspector
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#web-based-inspector" class="md-nav__link">
+    <span class="md-ellipsis">
+      Web-based inspector
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#benchmark-results" class="md-nav__link">
     <span class="md-ellipsis">
       Benchmark results
@@ -849,28 +865,6 @@ This is the pre-release of SWE-agent 1.0. <a href="https://swe-agent.com/latest/
   
   <span class="md-ellipsis">
     Batch mode
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../benchmarking/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Benchmarking
     
   </span>
   
@@ -1133,6 +1127,12 @@ This is the pre-release of SWE-agent 1.0. <a href="https://swe-agent.com/latest/
       
         
       
+        
+      
+        
+      
+        
+      
     
     
       
@@ -1226,11 +1226,77 @@ This is the pre-release of SWE-agent 1.0. <a href="https://swe-agent.com/latest/
   
   
     <li class="md-nav__item">
+      <a href="../../config/models/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Models
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../config/demonstrations/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
     Demonstrations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../config/tools/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tools
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../config/environments/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Environments
     
   </span>
   
@@ -1657,6 +1723,8 @@ This is the pre-release of SWE-agent 1.0. <a href="https://swe-agent.com/latest/
       
         
       
+        
+      
     
     
       
@@ -1789,6 +1857,28 @@ This is the pre-release of SWE-agent 1.0. <a href="https://swe-agent.com/latest/
   
   <span class="md-ellipsis">
     History processors
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/parsers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Action parsers
     
   </span>
   
@@ -2006,6 +2096,24 @@ This is the pre-release of SWE-agent 1.0. <a href="https://swe-agent.com/latest/
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#command-line-inspector" class="md-nav__link">
+    <span class="md-ellipsis">
+      Command line inspector
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#web-based-inspector" class="md-nav__link">
+    <span class="md-ellipsis">
+      Web-based inspector
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#benchmark-results" class="md-nav__link">
     <span class="md-ellipsis">
       Benchmark results
@@ -2043,14 +2151,11 @@ This is the pre-release of SWE-agent 1.0. <a href="https://swe-agent.com/latest/
 <p class="admonition-title">Inspecting trajectories</p>
 <ul>
 <li>Trajectories are the main output of SWE-agent. They are the best way to understand what SWE-agent does, especially when running on many problem instances.</li>
-<li>We provide a web interface for visualizing <a href="../trajectories/"><code>.traj</code> files</a> from the <code>trajectories</code> folder more easily.</li>
+<li>We provide two tools for visualizing the <a href="../trajectories/"><code>.traj</code> files</a> from the <code>trajectories</code> folder more easily.</li>
+<li>Use <code>swe-agent inspect</code> (or <code>sweagent i</code>) to open the command line inspector.</li>
+<li>Use <code>swe-agent inspector</code> (or <code>sweagent I</code>) to open the web inspector.</li>
 <li>Please complete the <a href="../hello_world/">hello world</a> tutorial before proceeding.</li>
 </ul>
-</div>
-<div class="admonition tip">
-<p class="admonition-title">New inspector</p>
-<p>We now also have a new command line trajectory viewer!</p>
-<p>Try it out with <code>sweagent inspect</code> or <code>sweagent i</code>.</p>
 </div>
 <p>You should see a folder called <code>trajectories</code> in your working directory. Let's go to one of the <em>experiment directories</em>:</p>
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>trajectories/<span class="nv">$USER</span>/&lt;some<span class="w"> </span>directory&gt;<span class="w">  </span><span class="c1"># (1)!</span>
@@ -2058,6 +2163,29 @@ This is the pre-release of SWE-agent 1.0. <a href="https://swe-agent.com/latest/
 <ol>
 <li>Don't have a folder here? Make sure to run SWE-agent at least once.</li>
 </ol>
+<h2 id="command-line-inspector">Command line inspector</h2>
+<p><a class="glightbox" href="https://github.com/user-attachments/assets/808a1a9c-69c2-47c2-bd65-b50a16a03711" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img src="https://github.com/user-attachments/assets/808a1a9c-69c2-47c2-bd65-b50a16a03711"></a></p>
+<p>Run the inspector in the directory containing your <code>.traj</code> files:</p>
+<div class="highlight"><pre><span></span><code>sweagent<span class="w"> </span>inspect
+<span class="c1"># or</span>
+sweagent<span class="w"> </span>i
+</code></pre></div>
+<p>You will be put into a pager that lets you navigate between trajectories.
+Here's how to navigate (this is similar to vim keybindings):</p>
+<ul>
+<li>Use <code>q</code> to quit</li>
+<li>Switching between trajectories:<ul>
+<li><code>H</code> and <code>L</code> go to the previous/next trajectory</li>
+<li><code>t</code> brings up a list of all trajectories. Use type-ahead search to find a specific trajectory (once your search string results in a single match, the trajectory will be opened). Press <code>&lt;TAB&gt;</code> to cycle through the list of matches.</li>
+</ul>
+</li>
+<li>Use <code>h</code> and <code>l</code> to navigate between the steps in the trjaectory</li>
+<li>Use <code>j</code> and <code>k</code> to scroll down/up</li>
+<li>By default we only show reduced information. You can press <code>v</code> to toggle the view.</li>
+<li>Press <code>o</code> to open the logs</li>
+<li>Sometimes you see that you can press <code>e</code> to open a file in your <code>$EDITOR</code>. For this to work, the <code>EDITOR</code> environment variable must be set (e.g., to <code>nano</code> or <code>vim</code>).</li>
+</ul>
+<h2 id="web-based-inspector">Web-based inspector</h2>
 <p>Run the inspector in this directory (this is where your <code>*.traj</code> files are):</p>
 <p><div class="highlight"><pre><span></span><code>sweagent<span class="w"> </span>inspector
 <span class="c1"># or</span>
@@ -2072,7 +2200,7 @@ The inspector will then be launched in the browser:</p>
 <li><code>--port</code>: Port to host web app (Defaults to <code>8000</code>).</li>
 </ul>
 <h2 id="benchmark-results">Benchmark results</h2>
-<p>If you are running SWE-agent on a benchmark (see <a href="../benchmarking/">benchmarking</a>), you will see evaluation results as ✅ or ❌.
+<p>If you are running SWE-agent on a benchmark (see <a href="../batch_mode/">batch mode</a>), you will see evaluation results as ✅ or ❌.
 Otherwise, you will see ❓.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>

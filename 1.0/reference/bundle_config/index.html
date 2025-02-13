@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.3">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.4">
     
     
       
@@ -26,7 +26,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.d7758b05.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.8608ea7d.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
@@ -658,8 +658,6 @@ This is the pre-release of SWE-agent 1.0. <a href="https://swe-agent.com/latest/
       
         
       
-        
-      
     
     
       
@@ -792,28 +790,6 @@ This is the pre-release of SWE-agent 1.0. <a href="https://swe-agent.com/latest/
   
   <span class="md-ellipsis">
     Batch mode
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../usage/benchmarking/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Benchmarking
     
   </span>
   
@@ -1076,6 +1052,12 @@ This is the pre-release of SWE-agent 1.0. <a href="https://swe-agent.com/latest/
       
         
       
+        
+      
+        
+      
+        
+      
     
     
       
@@ -1169,11 +1151,77 @@ This is the pre-release of SWE-agent 1.0. <a href="https://swe-agent.com/latest/
   
   
     <li class="md-nav__item">
+      <a href="../../config/models/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Models
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../config/demonstrations/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
     Demonstrations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../config/tools/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tools
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../config/environments/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Environments
     
   </span>
   
@@ -1605,6 +1653,8 @@ This is the pre-release of SWE-agent 1.0. <a href="https://swe-agent.com/latest/
       
         
       
+        
+      
     
     
       
@@ -1747,6 +1797,28 @@ This is the pre-release of SWE-agent 1.0. <a href="https://swe-agent.com/latest/
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../parsers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Action parsers
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1830,6 +1902,225 @@ This is the pre-release of SWE-agent 1.0. <a href="https://swe-agent.com/latest/
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;ToolConfig
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" ToolConfig">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig.bundles" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;bundles
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig.command_docs" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;command_docs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig.commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;commands
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig.enable_bash_tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;enable_bash_tool
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig.env_variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;env_variables
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig.execution_timeout" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;execution_timeout
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig.filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;filter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig.format_error_template" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;format_error_template
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig.install_timeout" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;install_timeout
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig.multi_line_command_endings" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;multi_line_command_endings
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig.parse_function" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;parse_function
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig.reset_commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;reset_commands
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig.state_commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;state_commands
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig.submit_command" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;submit_command
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig.submit_command_end_name" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;submit_command_end_name
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig.tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;tools
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig.use_function_calling" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;use_function_calling
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolFilterConfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;ToolFilterConfig
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" ToolFilterConfig">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolFilterConfig.block_unless_regex" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;block_unless_regex
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolFilterConfig.blocklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;blocklist
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolFilterConfig.blocklist_error_template" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;blocklist_error_template
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolFilterConfig.blocklist_standalone" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;blocklist_standalone
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#sweagent.tools.commands.Command" class="md-nav__link">
@@ -2169,6 +2460,225 @@ This is the pre-release of SWE-agent 1.0. <a href="https://swe-agent.com/latest/
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;ToolConfig
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" ToolConfig">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig.bundles" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;bundles
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig.command_docs" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;command_docs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig.commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;commands
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig.enable_bash_tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;enable_bash_tool
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig.env_variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;env_variables
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig.execution_timeout" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;execution_timeout
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig.filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;filter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig.format_error_template" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;format_error_template
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig.install_timeout" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;install_timeout
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig.multi_line_command_endings" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;multi_line_command_endings
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig.parse_function" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;parse_function
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig.reset_commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;reset_commands
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig.state_commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;state_commands
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig.submit_command" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;submit_command
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig.submit_command_end_name" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;submit_command_end_name
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig.tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;tools
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolConfig.use_function_calling" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;use_function_calling
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolFilterConfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;ToolFilterConfig
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" ToolFilterConfig">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolFilterConfig.block_unless_regex" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;block_unless_regex
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolFilterConfig.blocklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;blocklist
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolFilterConfig.blocklist_error_template" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;blocklist_error_template
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sweagent.tools.tools.ToolFilterConfig.blocklist_standalone" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;blocklist_standalone
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#sweagent.tools.commands.Command" class="md-nav__link">
     <span class="md-ellipsis">
       <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;Command
@@ -2368,6 +2878,646 @@ This is the pre-release of SWE-agent 1.0. <a href="https://swe-agent.com/latest/
 
 <h1 id="tool-bundle-configuration">Tool bundle configuration</h1>
 
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="sweagent.tools.tools.ToolConfig" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">sweagent.tools.tools.ToolConfig</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-pydantic-model"><code>pydantic-model</code></small>
+  </span>
+
+</h2>
+
+
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+
+    
+
+        <p>Fields:</p>
+        <ul>
+            <li>
+              <code><a class="autorefs autorefs-internal" title="sweagent.tools.tools.ToolConfig.filter" href="#sweagent.tools.tools.ToolConfig.filter">filter</a></code>
+                (<code><a class="autorefs autorefs-internal" title="sweagent.tools.tools.ToolFilterConfig" href="#sweagent.tools.tools.ToolFilterConfig">ToolFilterConfig</a></code>)
+            </li>
+            <li>
+              <code><a class="autorefs autorefs-internal" title="sweagent.tools.tools.ToolConfig.bundles" href="#sweagent.tools.tools.ToolConfig.bundles">bundles</a></code>
+                (<code>list[<a class="autorefs autorefs-internal" title="sweagent.tools.bundle.Bundle" href="../tools_config/#sweagent.tools.bundle.Bundle">Bundle</a>]</code>)
+            </li>
+            <li>
+              <code><a class="autorefs autorefs-internal" title="sweagent.tools.tools.ToolConfig.env_variables" href="#sweagent.tools.tools.ToolConfig.env_variables">env_variables</a></code>
+                (<code>dict[str, <span title="typing.Any">Any</span>]</code>)
+            </li>
+            <li>
+              <code><a class="autorefs autorefs-internal" title="sweagent.tools.tools.ToolConfig.submit_command" href="#sweagent.tools.tools.ToolConfig.submit_command">submit_command</a></code>
+                (<code>str</code>)
+            </li>
+            <li>
+              <code><a class="autorefs autorefs-internal" title="sweagent.tools.tools.ToolConfig.parse_function" href="#sweagent.tools.tools.ToolConfig.parse_function">parse_function</a></code>
+                (<code><a class="autorefs autorefs-internal" title="sweagent.tools.parsing.ParseFunction" href="../parsers/#sweagent.tools.parsing.ParseFunction">ParseFunction</a></code>)
+            </li>
+            <li>
+              <code><a class="autorefs autorefs-internal" title="sweagent.tools.tools.ToolConfig.enable_bash_tool" href="#sweagent.tools.tools.ToolConfig.enable_bash_tool">enable_bash_tool</a></code>
+                (<code>bool</code>)
+            </li>
+            <li>
+              <code><a class="autorefs autorefs-internal" title="sweagent.tools.tools.ToolConfig.format_error_template" href="#sweagent.tools.tools.ToolConfig.format_error_template">format_error_template</a></code>
+                (<code>str</code>)
+            </li>
+            <li>
+              <code><a class="autorefs autorefs-internal" title="sweagent.tools.tools.ToolConfig.command_docs" href="#sweagent.tools.tools.ToolConfig.command_docs">command_docs</a></code>
+                (<code>str</code>)
+            </li>
+            <li>
+              <code><a class="autorefs autorefs-internal" title="sweagent.tools.tools.ToolConfig.multi_line_command_endings" href="#sweagent.tools.tools.ToolConfig.multi_line_command_endings">multi_line_command_endings</a></code>
+                (<code>dict[str, str]</code>)
+            </li>
+            <li>
+              <code><a class="autorefs autorefs-internal" title="sweagent.tools.tools.ToolConfig.submit_command_end_name" href="#sweagent.tools.tools.ToolConfig.submit_command_end_name">submit_command_end_name</a></code>
+                (<code>str | None</code>)
+            </li>
+            <li>
+              <code><a class="autorefs autorefs-internal" title="sweagent.tools.tools.ToolConfig.reset_commands" href="#sweagent.tools.tools.ToolConfig.reset_commands">reset_commands</a></code>
+                (<code>list[str | list[str]]</code>)
+            </li>
+            <li>
+              <code><a class="autorefs autorefs-internal" title="sweagent.tools.tools.ToolConfig.execution_timeout" href="#sweagent.tools.tools.ToolConfig.execution_timeout">execution_timeout</a></code>
+                (<code>int</code>)
+            </li>
+            <li>
+              <code><a class="autorefs autorefs-internal" title="sweagent.tools.tools.ToolConfig.install_timeout" href="#sweagent.tools.tools.ToolConfig.install_timeout">install_timeout</a></code>
+                (<code>int</code>)
+            </li>
+            <li>
+              <code><a class="autorefs autorefs-internal" title="sweagent.tools.tools.ToolConfig.use_function_calling" href="#sweagent.tools.tools.ToolConfig.use_function_calling">use_function_calling</a></code>
+                (<code>bool</code>)
+            </li>
+            <li>
+              <code><a class="autorefs autorefs-internal" title="sweagent.tools.tools.ToolConfig.state_commands" href="#sweagent.tools.tools.ToolConfig.state_commands">state_commands</a></code>
+                (<code>list[str]</code>)
+            </li>
+            <li>
+              <code><a class="autorefs autorefs-internal" title="sweagent.tools.tools.ToolConfig.commands" href="#sweagent.tools.tools.ToolConfig.commands">commands</a></code>
+                (<code>list[<a class="autorefs autorefs-internal" title="sweagent.tools.commands.Command" href="#sweagent.tools.commands.Command">Command</a>]</code>)
+            </li>
+            <li>
+              <code><a class="autorefs autorefs-internal" title="sweagent.tools.tools.ToolConfig.tools" href="#sweagent.tools.tools.ToolConfig.tools">tools</a></code>
+                (<code>list[dict]</code>)
+            </li>
+        </ul>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sweagent.tools.tools.ToolConfig.bundles" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">bundles</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-pydantic-field"><code>pydantic-field</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">bundles</span><span class="p">:</span> <span class="n">list</span><span class="p">[</span><span class="n"><a class="autorefs autorefs-internal" title="sweagent.tools.bundle.Bundle" href="../tools_config/#sweagent.tools.bundle.Bundle">Bundle</a></span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sweagent.tools.tools.ToolConfig.command_docs" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">command_docs</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-pydantic-field"><code>pydantic-field</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">command_docs</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="kc">None</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sweagent.tools.tools.ToolConfig.commands" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">commands</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-pydantic-field"><code>pydantic-field</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">commands</span><span class="p">:</span> <span class="n">list</span><span class="p">[</span><span class="n"><a class="autorefs autorefs-internal" title="sweagent.tools.commands.Command" href="#sweagent.tools.commands.Command">Command</a></span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Read command files and return parsed command objects</p>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sweagent.tools.tools.ToolConfig.enable_bash_tool" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">enable_bash_tool</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-pydantic-field"><code>pydantic-field</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">enable_bash_tool</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="kc">True</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sweagent.tools.tools.ToolConfig.env_variables" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">env_variables</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-pydantic-field"><code>pydantic-field</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">env_variables</span><span class="p">:</span> <span class="n">dict</span><span class="p">[</span><span class="n">str</span><span class="p">,</span> <span class="n"><span title="typing.Any">Any</span></span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Shorthand to set environment variables for the tools, effectively
+equivalent to adding <code>export VARNAME=value</code> to the <code>reset_commands</code>.</p>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sweagent.tools.tools.ToolConfig.execution_timeout" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">execution_timeout</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-pydantic-field"><code>pydantic-field</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">execution_timeout</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="mi">30</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Timeout for executing commands in the environment</p>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sweagent.tools.tools.ToolConfig.filter" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">filter</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-pydantic-field"><code>pydantic-field</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nb">filter</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-internal" title="sweagent.tools.tools.ToolFilterConfig" href="#sweagent.tools.tools.ToolFilterConfig">ToolFilterConfig</a></span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sweagent.tools.tools.ToolConfig.format_error_template" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">format_error_template</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-pydantic-field"><code>pydantic-field</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">format_error_template</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="kc">None</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Defaults to format_error_template in ParseFunction</p>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sweagent.tools.tools.ToolConfig.install_timeout" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">install_timeout</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-pydantic-field"><code>pydantic-field</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">install_timeout</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="mi">300</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Timeout used for each of the installation commands</p>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sweagent.tools.tools.ToolConfig.multi_line_command_endings" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">multi_line_command_endings</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-pydantic-field"><code>pydantic-field</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">multi_line_command_endings</span><span class="p">:</span> <span class="n">dict</span><span class="p">[</span><span class="n">str</span><span class="p">,</span> <span class="n">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sweagent.tools.tools.ToolConfig.parse_function" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">parse_function</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-pydantic-field"><code>pydantic-field</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">parse_function</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-internal" title="sweagent.tools.parsing.ParseFunction" href="../parsers/#sweagent.tools.parsing.ParseFunction">ParseFunction</a></span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sweagent.tools.tools.ToolConfig.reset_commands" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">reset_commands</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-pydantic-field"><code>pydantic-field</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">reset_commands</span><span class="p">:</span> <span class="n">list</span><span class="p">[</span><span class="n">str</span> <span class="o">|</span> <span class="n">list</span><span class="p">[</span><span class="n">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Commands to reset the environment. They will also be called when we start the environment.
+Unlike <code>install_commands</code>, these commands are part of the environment state.</p>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sweagent.tools.tools.ToolConfig.state_commands" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">state_commands</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-pydantic-field"><code>pydantic-field</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">state_commands</span><span class="p">:</span> <span class="n">list</span><span class="p">[</span><span class="n">str</span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sweagent.tools.tools.ToolConfig.submit_command" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">submit_command</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-pydantic-field"><code>pydantic-field</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">submit_command</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="s1">&#39;submit&#39;</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sweagent.tools.tools.ToolConfig.submit_command_end_name" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">submit_command_end_name</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-pydantic-field"><code>pydantic-field</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">submit_command_end_name</span><span class="p">:</span> <span class="n">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Commands to install dependencies and tools.
+These commands are executed in a subprocess and are not part of the environment state.</p>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sweagent.tools.tools.ToolConfig.tools" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">tools</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-pydantic-field"><code>pydantic-field</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">tools</span><span class="p">:</span> <span class="n">list</span><span class="p">[</span><span class="n">dict</span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sweagent.tools.tools.ToolConfig.use_function_calling" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">use_function_calling</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-pydantic-field"><code>pydantic-field</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">use_function_calling</span><span class="p">:</span> <span class="n">bool</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+    </div>
+
+</div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="sweagent.tools.tools.ToolFilterConfig" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">sweagent.tools.tools.ToolFilterConfig</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-pydantic-model"><code>pydantic-model</code></small>
+  </span>
+
+</h2>
+
+
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+
+    
+
+        <p>Fields:</p>
+        <ul>
+            <li>
+              <code><a class="autorefs autorefs-internal" title="sweagent.tools.tools.ToolFilterConfig.blocklist_error_template" href="#sweagent.tools.tools.ToolFilterConfig.blocklist_error_template">blocklist_error_template</a></code>
+                (<code>str</code>)
+            </li>
+            <li>
+              <code><a class="autorefs autorefs-internal" title="sweagent.tools.tools.ToolFilterConfig.blocklist" href="#sweagent.tools.tools.ToolFilterConfig.blocklist">blocklist</a></code>
+                (<code>list[str]</code>)
+            </li>
+            <li>
+              <code><a class="autorefs autorefs-internal" title="sweagent.tools.tools.ToolFilterConfig.blocklist_standalone" href="#sweagent.tools.tools.ToolFilterConfig.blocklist_standalone">blocklist_standalone</a></code>
+                (<code>list[str]</code>)
+            </li>
+            <li>
+              <code><a class="autorefs autorefs-internal" title="sweagent.tools.tools.ToolFilterConfig.block_unless_regex" href="#sweagent.tools.tools.ToolFilterConfig.block_unless_regex">block_unless_regex</a></code>
+                (<code>dict[str, str]</code>)
+            </li>
+        </ul>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sweagent.tools.tools.ToolFilterConfig.block_unless_regex" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">block_unless_regex</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-pydantic-field"><code>pydantic-field</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">block_unless_regex</span><span class="p">:</span> <span class="n">dict</span><span class="p">[</span><span class="n">str</span><span class="p">,</span> <span class="n">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;radare2&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">b(?:radare2)</span><span class="se">\\</span><span class="s1">b.*</span><span class="se">\\</span><span class="s1">s+-c</span><span class="se">\\</span><span class="s1">s+.*&#39;</span><span class="p">,</span> <span class="s1">&#39;r2&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">b(?:radare2)</span><span class="se">\\</span><span class="s1">b.*</span><span class="se">\\</span><span class="s1">s+-c</span><span class="se">\\</span><span class="s1">s+.*&#39;</span><span class="p">}</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Block any command that matches one of these regexes unless it also matches the regex</p>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sweagent.tools.tools.ToolFilterConfig.blocklist" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">blocklist</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-pydantic-field"><code>pydantic-field</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">blocklist</span><span class="p">:</span> <span class="n">list</span><span class="p">[</span><span class="n">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;vim&#39;</span><span class="p">,</span> <span class="s1">&#39;vi&#39;</span><span class="p">,</span> <span class="s1">&#39;emacs&#39;</span><span class="p">,</span> <span class="s1">&#39;nano&#39;</span><span class="p">,</span> <span class="s1">&#39;nohup&#39;</span><span class="p">,</span> <span class="s1">&#39;git&#39;</span><span class="p">,</span> <span class="s1">&#39;gdb&#39;</span><span class="p">,</span> <span class="s1">&#39;less&#39;</span><span class="p">,</span> <span class="s1">&#39;tail -f&#39;</span><span class="p">,</span> <span class="s1">&#39;python -m venv&#39;</span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Block any command that starts with one of these</p>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sweagent.tools.tools.ToolFilterConfig.blocklist_error_template" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">blocklist_error_template</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-pydantic-field"><code>pydantic-field</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">blocklist_error_template</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="s2">&quot;Operation &#39;{{action}}&#39; is not supported by this environment.&quot;</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sweagent.tools.tools.ToolFilterConfig.blocklist_standalone" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">blocklist_standalone</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-pydantic-field"><code>pydantic-field</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">blocklist_standalone</span><span class="p">:</span> <span class="n">list</span><span class="p">[</span><span class="n">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;python&#39;</span><span class="p">,</span> <span class="s1">&#39;python3&#39;</span><span class="p">,</span> <span class="s1">&#39;ipython&#39;</span><span class="p">,</span> <span class="s1">&#39;bash&#39;</span><span class="p">,</span> <span class="s1">&#39;sh&#39;</span><span class="p">,</span> <span class="s1">&#39;/bin/bash&#39;</span><span class="p">,</span> <span class="s1">&#39;/bin/sh&#39;</span><span class="p">,</span> <span class="s1">&#39;nohup&#39;</span><span class="p">,</span> <span class="s1">&#39;vi&#39;</span><span class="p">,</span> <span class="s1">&#39;vim&#39;</span><span class="p">,</span> <span class="s1">&#39;emacs&#39;</span><span class="p">,</span> <span class="s1">&#39;nano&#39;</span><span class="p">,</span> <span class="s1">&#39;su&#39;</span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Block any command that matches one of these exactly</p>
+    </div>
+
+</div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
 
 <div class="doc doc-object doc-class">
 
