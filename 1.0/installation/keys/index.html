@@ -2287,6 +2287,14 @@ SWE-agent 1.0 is the open source SOTA on SWE-bench lite! <a href="https://swe-ag
 </tr>
 </tbody>
 </table>
+<div class="admonition hint">
+<p class="admonition-title">Parsers</p>
+</div>
+<p>The default config uses function calling to retrieve actions from the model response.
+  If your model doesn't support function calling, you can use the <code>thought_action</code> parser.
+  See <a href="../../reference/parsers/">our API docs</a> for more details.
+  Remember to document the tools in your prompt as the model will not be able to see the function signature
+  like with function calling.</p>
 <h2 id="model-options">Model options</h2>
 <p>See <a href="../../reference/model_config/">our API docs</a> for more details.</p>
 <h3 id="models-for-testing">Models for testing</h3>
