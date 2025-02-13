@@ -173,6 +173,10 @@
          <lastmod>2025-02-13</lastmod>
     </url>
     <url>
+         <loc>https://swe-agent.com/latest/usage/cli/</loc>
+         <lastmod>2025-02-13</lastmod>
+    </url>
+    <url>
          <loc>https://swe-agent.com/latest/usage/coding_challenges/</loc>
          <lastmod>2025-02-13</lastmod>
     </url>
@@ -190,6 +194,10 @@
     </url>
     <url>
          <loc>https://swe-agent.com/latest/usage/trajectories/</loc>
+         <lastmod>2025-02-13</lastmod>
+    </url>
+    <url>
+         <loc>https://swe-agent.com/latest/usage/whats_next/</loc>
          <lastmod>2025-02-13</lastmod>
     </url>
 </urlset>
