@@ -2353,6 +2353,15 @@ See <a href="../../reference/parsers/">our API docs</a> for more details on pars
 Remember to document the tools in your prompt as the model will not be able to see the function signature
 like with function calling.</p>
 </div>
+<div class="admonition warning">
+<p class="admonition-title">Message types</p>
+<p>The <code>cache_control</code> history processor requires a different message format
+(e.g., <code>{'role': 'user', 'content': [{'type': 'text', 'text': 'some text', 'cache_control': {'type': 'ephemeral'}}]}]</code>).
+This might not be understood by all language models.
+Therefore, please remove this history processor if you do not need it
+(it's currently mostly used for anthropic cache control).
+See <a href="https://github.com/SWE-agent/SWE-agent/issues/957">#957</a> for more information.</p>
+</div>
 <h2 id="something-went-wrong">Something went wrong?</h2>
 <ul>
 <li>If you get <code>Error code: 404</code>, please check your configured keys, in particular
